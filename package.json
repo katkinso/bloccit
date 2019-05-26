@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/katkinso/bloccit/issues"
   },
-  "homepage": "https://github.com/katkinso/bloccit#readme"
+  "homepage": "https://github.com/katkinso/bloccit#readme",
+  "devDependencies": {
+    "jasmine": "^3.0.0",
+    "request": "^2.83.0"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
