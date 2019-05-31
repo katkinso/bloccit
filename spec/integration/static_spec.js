@@ -4,21 +4,22 @@ const base = "http://localhost:3000/";
 
 describe("routes : static", () => {
 
-//#1
-  describe("GET /", () => {
 
-//#2
-it("should return status code 200 and have 'Welcome to Bloccit' in the body of the response", () => {
+      describe("GET /", () => {
 
-//#3
-      request.get(base, (err, res, body) => {
-        expect(res.statusCode).toBe(200);
-        // expect(body).toContain("Welcome to Bloccit");
+        it("should return status code 200", () => {
+          request.get(base, (err, res, body) => {
+            // expect(res.statusCode).toBe(200);
+            expect(res.statusCode).toBe("hello"); //why does this work?
+            // expect(res).toBe("hi"); //why can't I have more than one test? w/o it saying 'done not found'?
+            done();
+          });
+        });
 
-//#4
-        done();
-      });
-    });
+        
 
-  });
+      }); // GET /
+
+  
+
 });
