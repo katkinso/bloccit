@@ -5,20 +5,28 @@ const base = "http://localhost:3000/";
 describe("routes : static", () => {
 
 
-      describe("GET /", () => {
+      describe("TEST ROUTES", () => {
 
-        it("should return status code 200", () => {
+        it("`/` should return status code 200", (done) => {
+
           request.get(base, (err, res, body) => {
-            // expect(res.statusCode).toBe(200);
-            expect(res.statusCode).toBe("hello"); //why does this work?
-            // expect(res).toBe("hi"); //why can't I have more than one test? w/o it saying 'done not found'?
+            expect(res.statusCode).toBe(200); 
             done();
           });
+
         });
 
+        it("`/about` should return status code 200 and contain the string `about`", (done) => {
         
+          request.get(base + 'about', (err, res, body) => {
+            expect(res.statusCode).toBe(200); 
+            expect(res.body).toContain('About'); 
+            done();
+          });
 
-      }); // GET /
+        });
+      
+       }); // TEST ROUTES
 
   
 
