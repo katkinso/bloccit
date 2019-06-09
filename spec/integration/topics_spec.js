@@ -125,8 +125,8 @@ describe("routes : topics", () => {
         });
       });
 
-    });//DELETE
-  });
+    });
+  });//DELETE
 
   // EDIT
   describe("GET /topics/:id/edit", () => {
