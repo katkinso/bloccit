@@ -4,7 +4,7 @@
   "description": "A Reddit-like application for users to discuss and share content",
   "main": "src/server.js",
   "scripts": {
-    "test": "export NODE_ENV=test && jasmine",
+    "test": "export NODE_ENV=test && node jasmine.js",
     "start": "node src/server.js"
   },
   "repository": {
@@ -20,6 +20,7 @@
   "devDependencies": {
     "faker": "^4.1.0",
     "jasmine": "^3.0.0",
+    "jasmine-console-reporter": "^3.1.0",
     "request": "^2.83.0"
   },
   "dependencies": {
