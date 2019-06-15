@@ -4,6 +4,7 @@ const base = "http://localhost:3000/topics/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 
+//all though the URLS
 describe("routes : topics", () => {
 
   beforeEach((done) => {
@@ -69,7 +70,8 @@ describe("routes : topics", () => {
     it("should create a new topic and redirect", (done) => {
 
       request.post(options, (err, res, body) => {
-        
+
+
           Topic.findOne({where: {title: "blink-182 songs"}})
           .then((topic) => {
             expect(res.statusCode).toBe(303);
@@ -77,9 +79,11 @@ describe("routes : topics", () => {
             expect(topic.description).toBe("What's your favorite blink-182 song?");
             done();
           })
-          .catch((err) => {
+          .catch((err) => { //related to findOne - bad model
             console.log(err);
-            done();
+            fail(); //call jasmine fail function
+            done(); //problem if error occurs - test will pass regardless. don't have catch
+            
           });
         }
       );

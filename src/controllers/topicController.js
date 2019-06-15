@@ -38,7 +38,9 @@ module.exports = {
            if(err || topic == null){
              res.redirect(404, "/");
            } else {
-             res.render("topics/show", {topic});
+             res.render("topics/show", {topic}); 
+             //react - JSON -> capture and res.json(x)
+             //firebase url
            }
          });
   },
