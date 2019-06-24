@@ -1,15 +1,25 @@
 const postQueries = require("../db/queries.posts.js");
+const flairQueries = require("../db/queries.flairs.js");
+
 
 module.exports = {
   new(req, res, next) {
-    res.render("posts/new", { topicId: req.params.topicId });
+    flairQueries.getAllFlairs((err, flairs) => {
+      if(err){
+        res.render("posts/new", { topicId: req.params.topicId });
+      } else {
+        res.render("posts/new", { topicId: req.params.topicId, flairs });
+      }
+    })
   },
   create(req, res, next) {
     let newPost = {
       title: req.body.title,
       body: req.body.body,
-      topicId: req.params.topicId
+      topicId: req.params.topicId,
+      flairs: req.body.flairs
     };
+    
     postQueries.addPost(newPost, (err, post) => {
       if (err) {
         res.redirect(500, "/posts/new");
@@ -41,7 +51,13 @@ module.exports = {
       if(err || post == null){
         res.redirect(404, "/");
       } else {
-        res.render("posts/edit", {post});
+        flairQueries.getAllFlairs((err, flairs) => {
+          if(err){
+            res.render("posts/edit", {post});
+          } else {
+            res.render("posts/edit", {post, flairs});
+          }
+        })
       }
     });
   },

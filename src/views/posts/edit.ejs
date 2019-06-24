@@ -1,29 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ../static/partials/head.ejs %>
-  </head>
-  <body>
-    <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
 
-      <h1>Edit Post</h1>
+<body>
+  <% include ../static/partials/navbar.ejs %>
 
-      <form action="/topics/<%= post.topicId %>/posts/<%= post.id %>/update" method="post">
-        <div class="form-group">
-          <label for="title">Post title</label>
-          <input value="<%= post.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
-        </div>
-        <div class="form-group">
-          <label for="body">Post body</label>
-          <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%= post.body %></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-      </form>
-    </main>
+  <main class="container">
+    <br>
+    <h1>Edit Post</h1>
 
-    <% include ../static/partials/baseScripts.ejs %>
+    <form action="/topics/<%= post.topicId %>/posts/<%= post.id %>/update" method="post">
+      <div class="form-group">
+        <label for="title">Post title</label>
+        <input value="<%= post.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp"
+          placeholder="Enter Title">
+      </div>
+      <div class="form-group">
+        <label for="body">Post body</label>
+        <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%= post.body %></textarea>
+      </div>
+      <br />
+      <h5>Add Flair</h5>
+      <hr /><br />
 
-  </body>
+      <ul class="list-group">
+        <% flairs.forEach((flair) => { %>
+        <li class="list-group-item">
+          <a href="/flairs/<%= flair.id %>"> <%= flair.name %> : <%= flair.color %> </a>
+        </li>
+        <% }) %>
+      </ul>
+      <br />
+      <button type="submit" class="btn btn-primary">Update</button>
+      <br /><br />
+    </form>
+
+
+    <br />
+    <h5>Delete Flair</h5>
+    <hr /><br />
+
+    <form action="/topics/<%= post.topicId %>/posts/<%= post.id %>/flair-remove" method="post">
+
+      <ul class="list-group">
+        <% post.flairs.forEach((flair) => { %>
+        <li class="list-group-item">
+          <%= flair.name %> : <%= flair.color %>
+          <button type="button" class="btn btn-danger float-right" value=<%= flair.id %>>Delete</button>
+        </li>
+        <% }) %>
+      </ul>
+
+
+    </form>
+  </main>
+
+  <% include ../static/partials/baseScripts.ejs %>
+
+</body>
+
 </html>
