@@ -45,10 +45,6 @@ module.exports = {
   },
   deletePost(id, callback){
     return Post.destroy({
-      include: [{
-        model: FlairPosts,
-        as: "flairposts"
-      }],
       where: { id }
     })
     .then((deletedRecordsCount) => {
