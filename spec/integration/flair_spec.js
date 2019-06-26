@@ -115,8 +115,5 @@ describe("routes : flairs", () => {
     });//DELETE
   });
 
-  //get one flair
-  //delete flair
-  //create flair
 
 });

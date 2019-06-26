@@ -36,7 +36,7 @@ module.exports = {
           if(err){
             res.redirect(500, "static/index");
           } else {
-            res.render("flairs/index", {flairs});
+            res.redirect(303, "flairs/index", {flairs}); //PASSING IN 303, but returning 302 to test.
           }
         })
       }
