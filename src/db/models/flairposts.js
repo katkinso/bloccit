@@ -4,16 +4,26 @@ module.exports = (sequelize, DataTypes) => {
     flairId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "Flair",
+        key: "id",
+        as: "flairId",
+      }
     },
     postId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "Post",
+        key: "id",
+        as: "postId",
+      }
     }
   }, {});
   FlairPosts.associate = function (models) {
     // associations can be defined here
     FlairPosts.belongsTo(models.Post, {
-      foreignKey: "id",
+      foreignKey: "postId",
       onDelete: "CASCADE"
     });
 

@@ -9,10 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       flairId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: "Flairs",
+          key: "id",
+          as: "flairId",
+        }
       },
       postId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: "Posts",
+          key: "id",
+          as: "postId",
+        }
       },
       createdAt: {
         allowNull: false,

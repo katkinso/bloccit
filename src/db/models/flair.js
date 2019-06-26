@@ -18,6 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       as: "posts",
       onDelete: 'CASCADE'
     });
+
+    Flair.hasMany(models.FlairPosts, {
+      foreignKey: "flairId",
+      as: "flairposts"
+    });
+    
   };
+
   return Flair;
 };

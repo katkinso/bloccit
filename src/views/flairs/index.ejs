@@ -9,10 +9,19 @@
 
       <h1>Flairs</h1>
 
+      <button class="btn btn-primary" onclick="window.location.href = '/flairs/new';">New Flair</button><br><br>
+
       <ul class="list-group">
         <% flairs.forEach((flair) => { %>
           <li class="list-group-item">
             <a href="/flairs/<%= flair.id %>"> <%= flair.name %> : <%= flair.color %> </a>
+            <form
+            style="display:initial"
+            action="/flairs/<%= flair.id %>/destroy"
+            method="post"
+          >
+            <button type="submit" class="btn btn-danger float-right">Delete</button>
+          </form>
           </li>
         <% }) %>
       </ul>

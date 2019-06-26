@@ -14,6 +14,15 @@ module.exports = {
   new(req, res, next){
     res.render("flairs/new");
   },
+  destroy(req, res, next){
+    flairQueries.deleteFlair(req.params.id, (err, deletedRecordsCount) => {
+      if(err){
+        res.redirect(500, `/flairs`)
+      } else {
+        res.redirect(303, `/flairs`)
+      }
+    });
+  },
   create(req, res, next){
     let newFlair = {
       name: req.body.name,
