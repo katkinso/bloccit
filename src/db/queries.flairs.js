@@ -26,8 +26,6 @@ module.exports = {
       where: { id }
     })
     .then((deletedRecordsCount) => {
-      // user.removeRoles(user.Roles);
-      console.log(deletedRecordsCount)
       callback(null, deletedRecordsCount);
     })
     .catch((err) => {
