@@ -12,15 +12,17 @@ module.exports = {
         let flairs = []
         flairs = [...newPost.flairs]
 
-        flairs.map((flairid) => {
-          
+        let promises =  flairs.map((flairid) => {
           FlairPosts.create({
             postId: post.id,
             flairId: flairid
           })
         })
-
-        callback(null, post);
+        
+        Promise.all(promises).then(
+          () => callback(null, post)
+        )
+        
       })
       .catch(err => {
         callback(err);
