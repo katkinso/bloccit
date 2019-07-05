@@ -158,28 +158,28 @@ describe("routes : topics", () => {
 
     });
 
-    // describe("POST /topics/:id/update", () => {
+    describe("POST /topics/:id/update", () => {
 
-    //   it("should update the topic with the given values", (done) => {
-    //     request.post({
-    //       url: `${base}${this.topic.id}/update`,
-    //       form: {
-    //         title: "JavaScript Frameworks",
-    //         description: "There are a lot of them"
-    //       }
-    //     }, (err, res, body) => {
-    //       expect(err).toBeNull();
-    //       Topic.findOne({
-    //         where: {id:1}
-    //       })
-    //       .then((topic) => {
-    //         expect(topic.title).toBe("JavaScript Frameworks");
-    //         done();
-    //       });
-    //     });
-    //   });
+      it("should update the topic with the given values", (done) => {
+        request.post({
+          url: `${base}${this.topic.id}/update`,
+          form: {
+            title: "JavaScript Frameworks",
+            description: "There are a lot of them"
+          }
+        }, (err, res, body) => {
+          expect(err).toBeNull();
+          Topic.findOne({
+            where: {id:1}
+          })
+          .then((topic) => {
+            expect(topic.title).toBe("JavaScript Frameworks");
+            done();
+          });
+        });
+      });
 
-    // });
+    });
 
   }); //end context for admin user
 

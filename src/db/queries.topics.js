@@ -1,5 +1,7 @@
 const Topic = require("./models").Topic;
 const Post = require("./models").Post;
+const Authorizer = require("../policies/topic");
+
 
 
 module.exports = {
@@ -41,15 +43,9 @@ module.exports = {
       })
   },
   deleteTopic(req, callback) {
-    ///XXXX THIS IS WHERE ITS BREAKING XXXXX
-    //Having and issue with Topic.findByPk
-    //ERROR: Topic.findByPk is not a function
-    //Worked around this before by changing the query to Topic.findById
-
-
-    // console.log("req.params.id: ", req.params.id) //SUCCESSS
-    // #1
-    return Topic.findByPk(req.params.id)
+    
+    return Topic.findById(req.params.id)
+    
       .then((topic) => {
 
         // #2
@@ -57,7 +53,6 @@ module.exports = {
 
         if (authorized) {
           // #3
-          console.log("IN - authorized: ", authorized) //NOT GETTING HERE
 
           topic.destroy()
             .then((res) => {
@@ -78,7 +73,7 @@ module.exports = {
   updateTopic(req, updatedTopic, callback){
 
     // #1
-         return Topic.findByPk(req.params.id)
+        return Topic.findById(req.params.id)
          .then((topic) => {
     
     // #2
