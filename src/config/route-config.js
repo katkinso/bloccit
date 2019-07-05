@@ -9,6 +9,12 @@ module.exports = {
       const flairRoutes = require("../routes/flair");
       const userRoutes = require("../routes/users");
 
+      //initiate the configuration if we are in the test environment
+      if(process.env.NODE_ENV === "test") {
+        const mockAuth = require("../../spec/support/mock-auth.js");
+        mockAuth.fakeIt(app);
+      }
+
       app.use(staticRoutes);
       app.use(postRoutes);
       app.use(topicRoutes);

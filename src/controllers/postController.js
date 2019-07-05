@@ -17,11 +17,13 @@ module.exports = {
       title: req.body.title,
       body: req.body.body,
       topicId: req.params.topicId,
-      flairs: req.body.flairs
+      userId: req.user.id,
+      flairs: req.body.flairs,
     };
     
     postQueries.addPost(newPost, (err, post) => {
       if (err) {
+        console.log(err)
         res.redirect(500, "/posts/new");
       } else {
         res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);

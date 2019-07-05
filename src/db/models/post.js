@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     topicId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
  
   }, {});
   Post.associate = function(models) {
@@ -33,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       as: "flairposts"
     });
 
+    Post.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE"
+    });
+    
   };
   return Post;
 };
