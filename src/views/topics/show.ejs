@@ -6,8 +6,12 @@
   <body>
     <% include ../static/partials/navbar.ejs %>
 
+    
+
     <main class="container">
       <h1><%= topic.title %></h1>
+
+      <% include ../static/partials/messages.ejs %>
 
       <% if(currentUser && currentUser.isAdmin()) { %>
         <a href="/topics/new" class="btn btn-success">New Topic</a>
