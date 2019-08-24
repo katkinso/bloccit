@@ -66,9 +66,12 @@ module.exports = {
       if(err){
         // res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.id}`) <-- DOES NOT WORK ///Internal Server Error. Redirecting to /topics/1/posts/14
         res.status(500).redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`) // <-- WORKS
+        // res.status(200).redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`)
+        // res.redirect(200, `/topics/${req.params.topicId}/posts/${req.params.id}`)
+
         // res.redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`)  <-- WORKS
       } else {
-        res.redirect(303, `/topics/${req.params.topicId}`) //303
+        res.status(303).redirect(`/topics/${req.params.topicId}`) //303
       }
     });
   }, 

@@ -7,6 +7,8 @@ const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
 
+// AS ADMIN -----------
+describe("POST As Admin -------------->", () => {
 
 describe("routes : posts", () => {
 
@@ -18,10 +20,24 @@ describe("routes : posts", () => {
     sequelize.sync({force: true}).then((res) => {
       User.create({
         email: "starman@tesla.com",
-        password: "Trekkie4lyfe"
+        password: "Trekkie4lyfe",
+        role: "admin"
       })
       .then((user) => {
         this.user = user;
+
+        request.get({         // mock authentication
+          url: "http://localhost:3000/auth/fake",
+          form: {
+            role: user.role,     // mock authenticate as `role` user
+            userId: user.id,
+            email: user.email
+          }
+        },
+        (err, res, body) => {
+          //done();
+          }
+        );
 
         Topic.create({
           title: "Winter Games",
@@ -31,7 +47,8 @@ describe("routes : posts", () => {
             body: "So much snow!",
             userId: this.user.id
           }]
-        }, {
+        }, 
+        {
           include: {
            model: Post,
            as: "posts"
@@ -40,6 +57,7 @@ describe("routes : posts", () => {
         .then((topic) => {
           this.topic = topic;
           this.post = topic.posts[0];
+
           done();
         })
       })
@@ -47,9 +65,11 @@ describe("routes : posts", () => {
 
   });
 
-  describe("GET /topics/:topicId/posts/new", () => {
 
+  describe("GET /topics/:topicId/posts/new", () => {
+    
     it("should render a new post form", (done) => {
+      
       request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("New Post");
@@ -59,60 +79,65 @@ describe("routes : posts", () => {
 
   });//GET
 
-  describe("POST /topics/:topicId/posts/create", () => {
+  
 
-    it("should not create a new post that fails validations", (done) => {
-      const options = {
-        url: `${base}/${this.topic.id}/posts/create`,
-        form: {
-          title: "a",
-          body: "b"
-        }
-      };
+          describe("POST /topics/:topicId/posts/create", () => {
 
-      request.post(options,
-        (err, res, body) => {
-          Post.findOne({where: {title: "a"}})
-          .then((post) => {
-              expect(post).toBeNull();
-              done();
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        }
-      );
-    });
+            it("should not create a new post that fails validations", (done) => {
 
-    it("should create a new post and redirect", (done) => {
-       const options = {
-         url: `${base}/${this.topic.id}/posts/create`,
-         form: {
-           title: "Watching snow melt",
-           body: "Without a doubt my favoriting things to do besides watching paint dry!"
-         }
-       };
-       request.post(options,
-         (err, res, body) => {
+              const options = {
+                url: `${base}/${this.topic.id}/posts/create`,
+                form: {
+                  title: "a",
+                  body: "b"
+                }
+              };
+
+              request.post(options,
+                (err, res, body) => {
+                  Post.findOne({where: {title: "a"}})
+                  .then((post) => {
+                      expect(post).toBeNull();
+                      done();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    done();
+                  });
+                }
+              );
+            });
+
+            it("should create a new post and redirect", (done) => {
+              const options = {
+                url: `${base}/${this.topic.id}/posts/create`,
+                form: {
+                  title: "Watching snow melt",
+                  body: "Without a doubt my favoriting things to do besides watching paint dry!"
+                }
+              };
+              request.post(options,
+                (err, res, body) => {
+        
+                  Post.findOne({where: {title: "Watching snow melt"}})
+                  .then((post) => {
+                    expect(post).not.toBeNull();
+                    expect(post.title).toBe("Watching snow melt");
+                    expect(post.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
+                    expect(post.topicId).not.toBeNull();
+                    done();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    done();
+                  });
+                }
+              );
+            });
+        
  
-           Post.findOne({where: {title: "Watching snow melt"}})
-           .then((post) => {
-             expect(post).not.toBeNull();
-             expect(post.title).toBe("Watching snow melt");
-             expect(post.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
-             expect(post.topicId).not.toBeNull();
-             done();
-           })
-           .catch((err) => {
-             console.log(err);
-             done();
-           });
-         }
-       );
-     });
  
-  });//POST
+}) //POST
 
   describe("POST /topics/:topicId/posts/:id/destroy", () => {
 
@@ -188,5 +213,11 @@ describe("routes : posts", () => {
     });
 
   });
+}); // POST AS ADMIN -----------
+
+
+
+
+
 
 });//MAIN END
