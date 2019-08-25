@@ -4,6 +4,7 @@ const FlairPosts = require("./models").FlairPosts;
 const Flair = require("./models").Flair;
 const Comment = require("./models").Comment;
 const User = require("./models").User;
+const Vote = require("./models").Vote;
 
 
 module.exports = {
@@ -42,9 +43,12 @@ module.exports = {
         required: false,
         attributes: ['id', 'name', 'color']
       },
+      { model: Vote,
+        as: "votes"
+      },
       {
-        model: Comment, 
-        as: "comments", 
+        model: Comment,
+        as: "comments",
         include: [
           { model: User }
         ]

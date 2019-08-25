@@ -1,11 +1,17 @@
 #!/usr/bin/env node
+
+var spec_files = ['**/*[sS]pec.js'];
+if (process.argv[2]){
+    spec_files = ['**/'+process.argv[2]];
+}
+   
  
 // setup Jasmine
 const Jasmine = require('jasmine');
 const jasmine = new Jasmine();
 jasmine.loadConfig({
     spec_dir: 'spec',
-    spec_files: ['**/*[sS]pec.js'],
+    spec_files: spec_files,
     helpers: ['helpers/**/*.js'],
     random: false,
     seed: null,

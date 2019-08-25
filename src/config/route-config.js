@@ -9,6 +9,7 @@ module.exports = {
       const flairRoutes = require("../routes/flair");
       const userRoutes = require("../routes/users");
       const commentRoutes = require("../routes/comments");
+      const voteRoutes = require("../routes/votes");
 
 
       //initiate the configuration if we are in the test environment
@@ -23,5 +24,7 @@ module.exports = {
       app.use(flairRoutes);
       app.use(userRoutes);
       app.use(commentRoutes);
+      app.use(voteRoutes);
+      
     }
   }
