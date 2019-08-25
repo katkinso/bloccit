@@ -8,6 +8,8 @@ module.exports = {
       const postRoutes = require("../routes/posts");
       const flairRoutes = require("../routes/flair");
       const userRoutes = require("../routes/users");
+      const commentRoutes = require("../routes/comments");
+
 
       //initiate the configuration if we are in the test environment
       if(process.env.NODE_ENV === "test") {
@@ -20,6 +22,6 @@ module.exports = {
       app.use(topicRoutes);
       app.use(flairRoutes);
       app.use(userRoutes);
-
+      app.use(commentRoutes);
     }
   }

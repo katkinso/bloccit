@@ -2,6 +2,8 @@ const Post = require("./models").Post;
 const Topic = require("./models").Topic;
 const FlairPosts = require("./models").FlairPosts;
 const Flair = require("./models").Flair;
+const Comment = require("./models").Comment;
+const User = require("./models").User;
 
 
 module.exports = {
@@ -10,7 +12,10 @@ module.exports = {
       .then(post => {
 
         let flairs = []
-        flairs = [...newPost.flairs]
+
+        if (newPost.flairs) {
+          flairs = [...newPost.flairs]
+        }
 
         let promises =  flairs.map((flairid) => {
           FlairPosts.create({
@@ -31,11 +36,18 @@ module.exports = {
   getPost(id, callback){
 
     return Post.findById(id,{
-       include: [{
+      include: [{
         model: Flair,
         as: "flairs",
         required: false,
         attributes: ['id', 'name', 'color']
+      },
+      {
+        model: Comment, 
+        as: "comments", 
+        include: [
+          { model: User }
+        ]
       }]
     })
     .then((post) => {

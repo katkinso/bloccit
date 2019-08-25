@@ -40,9 +40,10 @@ module.exports = {
       };
       topicQueries.addTopic(newTopic, (err, topic) => {
         if (err) {
-          res.redirect(500, "topics/new");
+          res.status(500).redirect("topics/new");
+          
         } else {
-          res.redirect(303, `/topics/${topic.id}`);
+          res.status(303).redirect(`/topics/${topic.id}`);
         }
       });
     } else {

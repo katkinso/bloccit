@@ -24,9 +24,9 @@ module.exports = {
     postQueries.addPost(newPost, (err, post) => {
       if (err) {
         console.log(err)
-        res.redirect(500, "/posts/new");
+        res.status(500).redirect("/posts/new");
       } else {
-        res.redirect(303, `/topics/${newPost.topicId}/posts/${post.id}`);
+        res.status(303).redirect(`/topics/${newPost.topicId}/posts/${post.id}`);
       }
     });
   },
