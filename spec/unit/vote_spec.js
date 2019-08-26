@@ -130,7 +130,60 @@ describe("Vote", () => {
               .catch((err) => {
      
                 expect(err.message).toContain("Vote.userId cannot be null");
-                expect(err.message).toContain("Vote.postId cannot be null");
+                done();
+     
+              })
+            });
+
+            it("should not create a vote when value not -1 or 1", (done) => {
+              Vote.create({
+                value: 2,
+                postId: this.post.id,
+                userId: this.user.id
+              })
+              .then((vote) => {
+     
+               // the code in this block will not be evaluated since the validation error
+               // will skip it. Instead, we'll catch the error in the catch block below
+               // and set the expectations there
+     
+                done();
+     
+              })
+              .catch((err) => {
+     
+                expect(err.message).toContain("Validation isIn on value failed");
+                done();
+     
+              })
+            });
+
+            it("should not create a vote when user votes twice", (done) => {
+              Vote.create({
+                value: 1,
+                postId: this.post.id,
+                userId: this.user.id
+              }).then(
+              Vote.create({
+                value: 1,
+                postId: this.post.id,
+                userId: this.user.id
+                })
+              )
+              .then((vote) => {
+
+                expect(vote.value).toBe(1);
+     
+               // the code in this block will not be evaluated since the validation error
+               // will skip it. Instead, we'll catch the error in the catch block below
+               // and set the expectations there
+     
+                done();
+     
+              })
+              .catch((err) => {
+     
+                expect(err.message).toContain('ss');
                 done();
      
               })
@@ -256,6 +309,25 @@ describe("Vote", () => {
                   expect(associatedPost.title).toBe("My first visit to Proxima Centauri b");
                   done();
                 });
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            });
+
+            //XXXX -> How do I test this function?
+            it("should count the number of votes", (done) => {
+              Vote.create({
+                value: 1,
+                userId: this.user.id,
+                postId: this.post.id
+              })
+              .then((vote) => {
+                
+                  expect(this.post.getPoints()).toBe(1); //?????
+                  done();
+                
               })
               .catch((err) => {
                 console.log(err);
