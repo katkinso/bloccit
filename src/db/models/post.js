@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     
   };
 
+  //ALVARO
   Post.prototype.getPoints = function(){
     // #1
         if(this.votes.length === 0) return 0
@@ -63,6 +64,28 @@ module.exports = (sequelize, DataTypes) => {
           .map((v) => { return v.value })
           .reduce((prev, next) => { return prev + next });
       };
-   
+  
+  Post.prototype.hasUpvoteFor = function(userId){
+
+       let hasVoted = this.votes.find((v) => v.userId === userId)
+
+        if (hasVoted) {
+          return hasVoted.value === 1 ? true : false;
+        }else{
+          return false;
+        }
+  }
+
+  Post.prototype.hasDownvoteFor = function(userId){
+
+    let hasVoted = this.votes.find((v) => v.userId === userId) // Move out?
+
+     if (hasVoted) {
+       return hasVoted.value === -1 ? true : false;
+     }else{
+       return false;
+     }
+}
+ 
   return Post;
 };

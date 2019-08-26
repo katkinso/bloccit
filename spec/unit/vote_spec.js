@@ -250,6 +250,10 @@ describe("Vote", () => {
                  done();
                });
              });
+
+             
+
+             
       
            }); //End #SetUser
 
@@ -316,18 +320,69 @@ describe("Vote", () => {
               });
             });
 
-            //XXXX -> How do I test this function?
+            // ALVARO
             it("should count the number of votes", (done) => {
               Vote.create({
                 value: 1,
                 userId: this.user.id,
                 postId: this.post.id
               })
-              .then((vote) => {
-                
-                  expect(this.post.getPoints()).toBe(1); //?????
+              .then((votes) => {
+                return Post.findById(this.post.id,{
+                  include: [
+                  { model: Vote,
+                    as: "votes"
+                  }]
+                }).then((post) => {
+                  expect(post.getPoints()).toBe(1);
                   done();
-                
+                })
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            });
+
+            it("should return true that user has upvoted post", (done) => {
+              Vote.create({
+                value: 1,
+                userId: this.user.id,
+                postId: this.post.id
+              })
+              .then((votes) => {
+                return Post.findById(this.post.id,{
+                  include: [
+                  { model: Vote,
+                    as: "votes"
+                  }]
+                }).then((post) => {
+                  expect(post.hasUpvoteFor(this.user.id)).toBe(true);
+                  done();
+                })
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            });
+
+            it("should return true that user has downvoted post", (done) => {
+              Vote.create({
+                value: -1,
+                userId: this.user.id,
+                postId: this.post.id
+              })
+              .then((votes) => {
+                return Post.findById(this.post.id,{
+                  include: [
+                  { model: Vote,
+                    as: "votes"
+                  }]
+                }).then((post) => {
+                  expect(post.hasDownvoteFor(this.user.id)).toBe(true);
+                  done();
+                })
               })
               .catch((err) => {
                 console.log(err);
@@ -335,8 +390,6 @@ describe("Vote", () => {
               });
             });
        
-          });
-
-           //#setPost() END
+          });//#setPost() END
 
 });
