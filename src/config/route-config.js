@@ -10,12 +10,13 @@ module.exports = {
       const userRoutes = require("../routes/users");
       const commentRoutes = require("../routes/comments");
       const voteRoutes = require("../routes/votes");
+      const favoriteRoutes = require("../routes/favorites");
 
 
       //initiate the configuration if we are in the test environment
       if(process.env.NODE_ENV === "test") {
         const mockAuth = require("../../spec/support/mock-auth.js");
-        mockAuth.fakeIt(app);
+        mockAuth.fakeIt(app); //pass app for middleware. 
       }
 
       app.use(staticRoutes);
@@ -25,6 +26,7 @@ module.exports = {
       app.use(userRoutes);
       app.use(commentRoutes);
       app.use(voteRoutes);
+      app.use(favoriteRoutes);
       
     }
   }

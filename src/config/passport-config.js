@@ -29,12 +29,12 @@ module.exports = {
       })
     }));
 
-// #6
+// #6 put user in the session with User id in session.
     passport.serializeUser((user, callback) => {
       callback(null, user.id);
     });
 
-// #7
+// #7 when get session info turn into user by finding in DB. puts in req.user.
     passport.deserializeUser((id, callback) => {
       User.findById(id) //findByPk for later version
       .then((user) => {

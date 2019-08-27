@@ -1,6 +1,6 @@
 module.exports = {
 
-    // #1
+    // #1 if user id in body of request will put in req.
       fakeIt(app){
     // #2
         let role, id, email;
@@ -33,7 +33,7 @@ module.exports = {
         }
     
     // #7
-        app.use(middleware)
+        app.use(middleware) // called before all routes
         app.get("/auth/fake", route)
       }
     }
