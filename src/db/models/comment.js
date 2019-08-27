@@ -25,7 +25,23 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE" //what does cascade mean in this context?
     });
+
+    Comment.addScope("lastFiveFor", (userId) => {
+
+      // #1
+          return {
+            include: [{
+              model: models.Post
+            }],
+            where: { userId: userId},
+     
+            limit: 5,
+            order: [["createdAt", "DESC"]]
+          }
+        });
   };
+
+    
 
 return Comment;
 };
