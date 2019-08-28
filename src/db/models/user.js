@@ -28,13 +28,41 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       as: "votes"
     });
+
+    User.hasMany(models.Favorite, {
+      foreignKey: "userId",
+      as: "favorites"
+    });
+
+  //   User.addScope("favoritePosts", (userId) => {
+  //     return {
+  //       include: [{
+  //         model: models.Favorite
+  //       }],
+  //       where: { id: userId},
+  //       order: [["createdAt", "DESC"]]
+  //     }
+  //  });
+
+      // User.addScope("favoritePosts", (userId) => {
+      //   return {
+      //     include: [{
+      //       model: models.Posts, as: 'posts',
+      //       model: models.Favorite, as: 'favorites'
+      //     }],
+      //     where: { id: userId},
+      //     order: [["createdAt", "DESC"]]
+      //   }
+      // });
+
   };
 
- 
 
   User.prototype.isAdmin = function() {
     return this.role === "admin";
   };
+
+ 
   return User;
 };
 
