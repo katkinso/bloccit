@@ -69,26 +69,26 @@ describe("Favorite", () => {
  describe("#create()", () => {
 
     // #2
-        it("should create a favorite for a post on a user", (done) => {
+    //     it("should create a favorite for a post on a user", (done) => {
    
-    // #3
-          Favorite.create({
-            postId: this.post.id,
-            userId: this.user.id
-          })
-          .then((favorite) => {
+    // // #3
+    //       Favorite.create({
+    //         postId: this.post.id,
+    //         userId: this.user.id
+    //       })
+    //       .then((favorite) => {
    
-    // #4
-            expect(favorite.postId).toBe(this.post.id);
-            expect(favorite.userId).toBe(this.user.id);
-            done();
+    // // #4
+    //         expect(favorite.postId).toBe(this.post.id);
+    //         expect(favorite.userId).toBe(this.user.id);
+    //         done();
    
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
-        });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //         done();
+    //       });
+    //     });
    
     // #5
         it("should not create a favorite without assigned post or user", (done) => {
@@ -116,40 +116,40 @@ describe("Favorite", () => {
       }); /// CREATE END
 
       //# 1
-   describe("#setUser()", () => {
+  //  describe("#setUser()", () => {
 
-    it("should associate a favorite and a user together", (done) => {
+  //   it("should associate a favorite and a user together", (done) => {
 
-      Favorite.create({           // create a favorite on behalf of this.user
-        postId: this.post.id,
-        userId: this.user.id
-      })
-      .then((favorite) => {
-        this.favorite = favorite;     // store it
-        expect(favorite.userId).toBe(this.user.id); //confirm it was created for this.user
+  //     Favorite.create({           // create a favorite on behalf of this.user
+  //       postId: this.post.id,
+  //       userId: this.user.id
+  //     })
+  //     .then((favorite) => {
+  //       this.favorite = favorite;     // store it
+  //       expect(favorite.userId).toBe(this.user.id); //confirm it was created for this.user
 
-        User.create({                 // create a new user
-          email: "bob@example.com",
-          password: "password"
-        })
-        .then((newUser) => {
+  //       User.create({                 // create a new user
+  //         email: "bob@example.com",
+  //         password: "password"
+  //       })
+  //       .then((newUser) => {
 
-          this.favorite.setUser(newUser)  // change the favorite's user reference for newUser
-          .then((favorite) => {
+  //         this.favorite.setUser(newUser)  // change the favorite's user reference for newUser
+  //         .then((favorite) => {
 
-            expect(favorite.userId).toBe(newUser.id); //confirm it was updated
-            done();
+  //           expect(favorite.userId).toBe(newUser.id); //confirm it was updated
+  //           done();
 
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          done();
-        });
-      })
-    });
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         done();
+  //       });
+  //     })
+  //   });
 
-  });
+  // });
 
  // #2
   describe("#getUser()", () => {
@@ -175,43 +175,43 @@ describe("Favorite", () => {
   });//get user end
 
 
-  describe("#setPost()", () => {
+  // describe("#setPost()", () => {
 
-    it("should associate a post and a favorite together", (done) => {
+  //   it("should associate a post and a favorite together", (done) => {
 
-      Favorite.create({           // create a favorite on `this.post`
-        postId: this.post.id,
-        userId: this.user.id
-      })
-      .then((favorite) => {
-        this.favorite = favorite;     // store it
+  //     Favorite.create({           // create a favorite on `this.post`
+  //       postId: this.post.id,
+  //       userId: this.user.id
+  //     })
+  //     .then((favorite) => {
+  //       this.favorite = favorite;     // store it
 
-        Post.create({         // create a new post
-          title: "Dress code on Proxima b",
-          body: "Spacesuit, space helmet, space boots, and space gloves",
-          topicId: this.topic.id,
-          userId: this.user.id
-        })
-        .then((newPost) => {
+  //       Post.create({         // create a new post
+  //         title: "Dress code on Proxima b",
+  //         body: "Spacesuit, space helmet, space boots, and space gloves",
+  //         topicId: this.topic.id,
+  //         userId: this.user.id
+  //       })
+  //       .then((newPost) => {
 
-          expect(this.favorite.postId).toBe(this.post.id); // check favorite not associated with newPost
+  //         expect(this.favorite.postId).toBe(this.post.id); // check favorite not associated with newPost
 
-          this.favorite.setPost(newPost)              // update post reference for favorite
-          .then((favorite) => {
+  //         this.favorite.setPost(newPost)              // update post reference for favorite
+  //         .then((favorite) => {
 
-            expect(favorite.postId).toBe(newPost.id); // ensure it was updated
-            done();
+  //           expect(favorite.postId).toBe(newPost.id); // ensure it was updated
+  //           done();
 
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          done();
-        });
-      });
-    });
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         done();
+  //       });
+  //     });
+  //   });
 
-  });//set Post
+  // });//set Post
 
    // #2
    describe("#getPost()", () => {

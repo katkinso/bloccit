@@ -30,38 +30,49 @@ module.exports = {
     
     // #1
        let result = {};
-       User.findById(id)
-       .then((user) => {
-    // #2
+      //  User.findById(id)
+      console.log(id)
+       User.scope({method: ["favoritePostsAlvaro", id]} ).findAll()
+       .then(([user]) => {
+          // console.log(user)
          if(!user) {
            callback(404);
          } else {
            result["user"] = user;
+          //  console.log("user.favorites= ", user.favorites[0].title)
+          //  callback(null,{user});
+          result["favorites"] = user.favorites;
+          
+          Post.scope({method: ["lastFiveFor", id]}).findAll()
+          .then((posts) => {
 
-          // User.scope({method: ["favoritePosts", id]}).findAll()
-          // .then((favorites) => {
-          //   result["favorites"] = favorites;
-          //   console.log(favorites[0].dataValues.favorites[0])
-          // })
-           Post.scope({method: ["lastFiveFor", id]}).findAll()
-           .then((posts) => {
+            
+            result["posts"] = posts;
+            
+            Comment.scope({method: ["lastFiveFor", id]}).findAll()
+            .then((comments) => {
 
-             result["posts"] = posts;
-             
-             Comment.scope({method: ["lastFiveFor", id]}).findAll()
-             .then((comments) => {
+              result["comments"] = comments;
 
-               result["comments"] = comments;
+              callback(null, result);
+            })
+            .catch((err) => {
+              callback(err);
+            })
+          })
+          .catch((err) => {
+           callback(err);
+         })///END
 
-               callback(null, result);
-             })
-             
-             .catch((err) => {
-               callback(err);
-             })
-           })
          }
-       })
+          }).catch((err) => {
+            console.log('err= ', err)
+            callback(err);
+          })
+
+          
+      //    }
+      //  })
      }
 
 }

@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "flairposts"
     });
 
-    Post.belongsTo(models.User, {
-      foreignKey: "userId",
-      onDelete: "CASCADE"
-    });
+    // Post.belongsTo(models.User, {
+    //   foreignKey: "userId",
+    //   onDelete: "CASCADE"
+    // });
 
     Post.hasMany(models.Comment, {
       foreignKey: "postId",
@@ -64,6 +64,13 @@ module.exports = (sequelize, DataTypes) => {
         postId: post.id
       });
     });
+
+    Post.belongsToMany(models.User, 
+      {
+        through: models.Favorite,
+        foreignKey: "postId"
+      }
+     )
     
   };
 
@@ -76,7 +83,9 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Post.prototype.getFavoriteFor = function (userId) {
-    return this.favorites.find((favorite) => { return favorite.userId == userId });
+    return this.favorites.find((favorite) => { 
+      return favorite.userId == userId 
+    });
   };
 
    // #1

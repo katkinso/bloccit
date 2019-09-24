@@ -21,9 +21,13 @@
  
  // #3
    destroy(req, res, next){
+
+    // console.log("req.user=xxx", req.user)
+
  
      if(req.user){
        favoriteQueries.deleteFavorite(req, (err, favorite) => {
+
          if(err){
            req.flash("error", err);
          }

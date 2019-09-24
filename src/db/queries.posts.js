@@ -36,7 +36,6 @@ module.exports = {
       });
   },
   getPost(id, callback){
-
     return Post.findById(id,{
       include: [{
         model: Flair,
@@ -67,7 +66,7 @@ module.exports = {
     })
     .then((deletedRecordsCount) => {
       // user.removeRoles(user.Roles);
-      console.log(deletedRecordsCount)
+      // console.log(deletedRecordsCount)
       callback(null, deletedRecordsCount);
     })
     .catch((err) => {

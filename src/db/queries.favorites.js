@@ -23,9 +23,8 @@
  
  // #3
    deleteFavorite(req, callback){
-     const id = req.params.id;
  
-     return Favorite.findById(id)
+     return Favorite.findOne({where: { userId: req.user.id, postId: req.params.postId}})
      .then((favorite) => {
  
        if(!favorite){
@@ -36,7 +35,7 @@
        const authorized = new Authorizer(req.user, favorite).destroy();
  
        if(authorized){
-         Favorite.destroy({ where: { id }})
+         favorite.destroy()
          .then((deletedRecordsCount) => {
            callback(null, deletedRecordsCount);
          })

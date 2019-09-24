@@ -56,7 +56,17 @@
       </ul>
 
 
-     
+      <h2> Favorite Posts</h2>
+      
+      <ul class="list-unstyled">
+      <% favorites.forEach((favorites) => { %>
+        <li>
+          <a href="/topics/<%= favorites.topicId %>/posts/<%= favorites.id %>">
+            <%= favorites.title %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
 
 
 

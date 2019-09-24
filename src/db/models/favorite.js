@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });
+
   };
   return Favorite;
 };
